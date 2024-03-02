@@ -108,11 +108,11 @@ function PLY:CheckVehicleData()
 		local properties = QBCore.Functions.GetVehicleProperties(PLY.veh)["extras"]
 
 		for k, v in pairs(CONFIG.RequiredExtras) do
-			if ( v == true and properties[k] == 1 )  then
+			if ( v == true and properties[k] == 1 ) then
 				return false
 			end
 
-			if v == false and properties[k] == 0 then
+			if ( v == false and properties[k] == 0 ) then
 				return false
 			end
 		end
@@ -120,8 +120,6 @@ function PLY:CheckVehicleData()
 
 	return GetVehicleClass(self.veh) == 18
 end
-
-
 
 -- The main purpose of this thread is to update the information about the local player, including their
 -- ped id, the vehicle id (if they're in one), whether they're in a driver seat, and if the vehicle's class
