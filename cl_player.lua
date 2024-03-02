@@ -92,6 +92,37 @@ function PLY:GetOtherPedServerId()
 	return nil
 end
 
+function PLY:CheckVehicleData()
+	
+	-- If the vehicle is NIL we just return fast
+	if ( self.veh == nil ) then
+		return false
+	end
+
+	-- The vehicle is not in the allowed vehicles.
+	if ( next(CONFIG.allowedVehicles) ~= nil and CONFIG.allowedVehicles[GetDisplayNameFromVehicleModel(GetEntityModel(self.veh))] ~= true) then
+		return false
+	end
+
+	if ( next(CONFIG.RequiredExtras) ~= nil ) then
+		local properties = QBCore.Functions.GetVehicleProperties(PLY.veh)["extras"]
+
+		for k, v in pairs(CONFIG.RequiredExtras) do
+			if ( v == true and properties[k] == 1 )  then
+				return false
+			end
+
+			if v == false and properties[k] == 0 then
+				return false
+			end
+		end
+	end 
+
+	return GetVehicleClass(self.veh) == 18
+end
+
+
+
 -- The main purpose of this thread is to update the information about the local player, including their
 -- ped id, the vehicle id (if they're in one), whether they're in a driver seat, and if the vehicle's class
 -- is valid or not
@@ -101,7 +132,7 @@ Citizen.CreateThread( function()
 		PLY.veh = GetVehiclePedIsIn( PLY.ped, false )
 		PLY.inDriverSeat = GetPedInVehicleSeat( PLY.veh, -1 ) == PLY.ped
 		PLY.inPassengerSeat = GetPedInVehicleSeat( PLY.veh, 0 ) == PLY.ped
-		PLY.vehClassValid = GetVehicleClass( PLY.veh ) == 18
+		PLY.vehClassValid = PLY:CheckVehicleData()
 
 		Citizen.Wait( 500 )
 	end

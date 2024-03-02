@@ -124,6 +124,20 @@ CONFIG.menuDefaults =
 	["fastLimit"] = 60
 }
 
+
+-- Instead of using the emergency vehicle class you can specify what vehicles in the emergency sector
+-- that can use the scanner
+CONFIG.allowedVehicles = {
+
+}
+
+-- You can force the vehicle to have specific extras on, if the extra is set to TRUE it'll have the 
+-- extra required and if it's set to false it'll have the extra banned.
+CONFIG.RequiredExtras = {
+
+}
+
+
 -- Here you can change the default scale of the UI elements, as well as the safezone size
 CONFIG.uiDefaults =
 {
